@@ -37,7 +37,7 @@ public class Pot {
     // Set the name. Throws IllegalArgumentException if name is an empty string (length 0),
     // or if name is a null-reference.
     public void setName(String name) {
-        if(name.length() == 0 || name.equals(null)){
+        if(name.length() == 0 || name == null){
             throw new IllegalArgumentException("name cannot be empty!");
         }
         else{

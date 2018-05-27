@@ -16,6 +16,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".AddingNewPot" />
+        <activity android:name=".Calculations_of_Servings" />
+        <activity android:name=".Calculations"></activity>
     </application>
 
 </manifest>

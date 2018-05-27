@@ -1,3 +1,17 @@
 <resources>
-    <string name="app_name">Serving Size alculator</string>
+    <string name="app_name">Serving Size Calculator</string>
+    <string name="pot_name_enter">Pot Name:</string>
+    <string name="Pot_Weight_enter">Pot Weight (g):</string>
+    <string name="add_pot">ADD POT</string>
+    <string name="pot_name">Pot Name</string>
+    <string name="pot_weight_g">Pot Weight (g)</string>
+    <string name="ok">OK</string>
+    <string name="cancel">CANCEL</string>
+    <string name="pot">Pot</string>
+    <string name="weight_empty_g">Weight Empty (g)</string>
+    <string name="weight_with_food_g">Weight With Food (g)</string>
+    <string name="weight_of_food_g">Weight of Food (g)</string>
+    <string name="servings"># Servings</string>
+    <string name="serving_weight_g">Serving Weight (g)</string>
+    <string name="back">BACK</string>
 </resources>
