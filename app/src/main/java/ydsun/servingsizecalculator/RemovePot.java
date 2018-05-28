@@ -30,6 +30,21 @@ public class RemovePot extends AppCompatActivity {
         RegisterClickCallBackForClickingPots();
     }
 
+    // initiate removing the pot user wanted to remove
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch(requestCode){
+            case REQUEST_CONFORM:
+                if(resultCode == Activity.RESULT_OK){
+                    int position = data.getIntExtra("conforming position", 0);
+                    final Intent intent = new Intent();
+                    intent.putExtra("removing_pos", position);
+                    setResult(Activity.RESULT_OK, intent);
+                    finish();
+                }
+        }
+    }
+
     // initiate BACK button
     private void setupBACKButton(){
         Button back = (Button) findViewById(R.id.remove_back);
@@ -52,15 +67,5 @@ public class RemovePot extends AppCompatActivity {
                 startActivityForResult(data, REQUEST_CONFORM);
             }
         });
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch(requestCode){
-            case REQUEST_CONFORM:
-                if(resultCode == Activity.RESULT_OK){
-
-                }
-        }
     }
 }

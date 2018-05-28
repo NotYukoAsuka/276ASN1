@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -89,6 +90,19 @@ public class MainMenu extends AppCompatActivity {
                     list.setAdapter(adapter);
                 }
                 else{
+                    String[] pot_description = my_pot_collection.getPotDescriptions();
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.pots, pot_description);
+                    ListView list = (ListView) findViewById(R.id.Pots);
+                    list.setAdapter(adapter);
+                }
+        }
+
+        switch(requestCode){
+            case REQUEST_REMOVE:
+                if(resultCode == Activity.RESULT_OK){
+                    int position = data.getIntExtra("removing_pos",0);
+                    Toast.makeText(getApplicationContext(), "Removed Pot: " + my_pot_collection.getPot(position).getName(), Toast.LENGTH_LONG).show();
+                    my_pot_collection.removePot(position);
                     String[] pot_description = my_pot_collection.getPotDescriptions();
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.pots, pot_description);
                     ListView list = (ListView) findViewById(R.id.Pots);

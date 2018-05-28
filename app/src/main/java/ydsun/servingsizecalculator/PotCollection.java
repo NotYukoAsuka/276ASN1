@@ -22,6 +22,11 @@ public class PotCollection extends ArrayList<Parcelable> implements Serializable
         pots.add(indexOfPotEditing, pot);
     }
 
+    public void removePot(int indexOfPotEditing){
+        validateIndexWithException(indexOfPotEditing);
+        pots.remove(indexOfPotEditing);
+    }
+
     public int countPots() {
         return pots.size();
     }
