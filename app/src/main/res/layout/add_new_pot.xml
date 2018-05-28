@@ -54,6 +54,7 @@
         android:layout_marginBottom="429dp"
         android:layout_marginEnd="70dp"
         android:ems="10"
+        android:maxLength="18"
         android:hint="@string/pot_weight_g"
         android:inputType="number"
         android:textColor="@color/colorAccent"

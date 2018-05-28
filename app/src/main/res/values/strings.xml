@@ -14,4 +14,9 @@
     <string name="servings"># Servings</string>
     <string name="serving_weight_g">Serving Weight (g)</string>
     <string name="back">BACK</string>
+    <string name="default_weight">default weight</string>
+    <string name="default_name">default name</string>
+    <string name="_0">0</string>
+    <string name="enter_weight_g">Enter Weight (g)</string>
+    <string name="enter_of_servings">Enter # of Servings</string>
 </resources>

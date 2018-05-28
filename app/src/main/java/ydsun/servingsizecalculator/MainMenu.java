@@ -23,6 +23,7 @@ import java.util.List;
 public class MainMenu extends AppCompatActivity {
 
     public static final int REQUEST_CODE = 114;
+    public static final int REQUEST_EDIT = 8078;
     PotCollection my_pot_collection = new PotCollection();
 
     @Override
@@ -32,6 +33,7 @@ public class MainMenu extends AppCompatActivity {
 
         setupAddPotButton();
         RegisterClickCallBackForPots();
+        RegisterLongClickForEditing();
 
 //        Intent intent = getIntent();
 //        int pot_weight = intent.getIntExtra("Pot Weight", 0);
@@ -48,20 +50,7 @@ public class MainMenu extends AppCompatActivity {
 //        list.setAdapter(adapter);
     }
 
-
-    private void setupAddPotButton(){
-        Button Add_Pot = (Button) findViewById(R.id.add_pot);
-        Add_Pot.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainMenu.this, AddingNewPot.class);
-                //startActivity(intent);
-                startActivityForResult(intent, REQUEST_CODE);
-            }
-        });
-    }
-
-
+    // Return for result from other activities
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch(requestCode){
@@ -83,8 +72,42 @@ public class MainMenu extends AppCompatActivity {
                     list.setAdapter(adapter);
                 }
         }
+        switch(requestCode){
+            case REQUEST_EDIT:
+                if(resultCode == Activity.RESULT_OK){
+                    String pot_name_new = data.getStringExtra("Pot Name");
+                    int pot_weight_new = data.getIntExtra("Pot Weight", 0);
+                    int position = data.getIntExtra("Position", 0);
+                    Pot edited_pot = new Pot(pot_name_new, pot_weight_new);
+                    my_pot_collection.changePot(edited_pot,position);
+                    String[] pot_description = my_pot_collection.getPotDescriptions();
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.pots, pot_description);
+                    ListView list = (ListView) findViewById(R.id.Pots);
+                    list.setAdapter(adapter);
+                }
+                else{
+                    String[] pot_description = my_pot_collection.getPotDescriptions();
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.pots, pot_description);
+                    ListView list = (ListView) findViewById(R.id.Pots);
+                    list.setAdapter(adapter);
+                }
+        }
     }
 
+    // initiate Add Pot Button
+    private void setupAddPotButton(){
+        Button Add_Pot = (Button) findViewById(R.id.add_pot);
+        Add_Pot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainMenu.this, AddingNewPot.class);
+                //startActivity(intent);
+                startActivityForResult(intent, REQUEST_CODE);
+            }
+        });
+    }
+
+    // initiate Click on Pot Calculation Menu Intent
     private void RegisterClickCallBackForPots(){
         ListView list = (ListView) findViewById(R.id.Pots);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -97,6 +120,20 @@ public class MainMenu extends AppCompatActivity {
                 intent.putExtra("Selected Name", selected_pot_name);
                 intent.putExtra("Selected Weight", selected_pot_weight);
                 startActivity(intent);
+            }
+        });
+    }
+
+    // initiate Pot Editing feature
+    private void  RegisterLongClickForEditing(){
+        ListView long_list = (ListView) findViewById(R.id.Pots);
+        long_list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View viewClicked, int position, long id) {
+                final Intent intent = new Intent(MainMenu.this, AddingNewPot.class);
+                intent.putExtra("Selected Position For Edit", position);
+                startActivityForResult(intent, REQUEST_EDIT);
+                return false;
             }
         });
     }

@@ -10,8 +10,16 @@ public class Pot {
 
     // Set member data based on parameters.
     public Pot(String name, int weightInG) {
-        this.name = name;
-        this.weightInG = weightInG;
+        if(name == null || name.isEmpty()){
+            throw new IllegalArgumentException("name cannot be empty!");
+        }
+        else if(weightInG < 0){
+            throw new IllegalArgumentException("weight must be positive!");
+        }
+        else {
+            this.name = name;
+            this.weightInG = weightInG;
+        }
     }
 
     // Return the weight
@@ -37,7 +45,7 @@ public class Pot {
     // Set the name. Throws IllegalArgumentException if name is an empty string (length 0),
     // or if name is a null-reference.
     public void setName(String name) {
-        if(name.length() == 0 || name == null){
+        if(name == null || name.isEmpty()){
             throw new IllegalArgumentException("name cannot be empty!");
         }
         else{

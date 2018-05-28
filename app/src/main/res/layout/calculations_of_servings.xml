@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Calculations">
+    tools:context=".Calculations"
+    tools:layout_editor_absoluteY="81dp">
 
     <TextView
         android:id="@+id/current_pots_name"
@@ -31,7 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="115dp"
+        android:layout_marginTop="110dp"
         android:text="@string/weight_with_food_g"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,18 +42,18 @@
         android:id="@+id/weight_of_food"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="7dp"
         android:text="@string/weight_of_food_g"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="@+id/weight_with_food"
-        app:layout_constraintTop_toTopOf="@+id/weight_with_food" />
+        app:layout_constraintTop_toBottomOf="@+id/weight_with_food" />
 
     <TextView
         android:id="@+id/number_serving"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="37dp"
+        android:layout_marginTop="32dp"
         android:text="@string/servings"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,11 +63,10 @@
         android:id="@+id/serving_weight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="13dp"
+        android:layout_marginTop="7dp"
         android:text="@string/serving_weight_g"
         android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/number_serving"
         app:layout_constraintTop_toBottomOf="@+id/number_serving" />
 
     <Button
@@ -83,19 +83,70 @@
         android:id="@+id/display_pot_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="171dp"
+        android:layout_marginEnd="54dp"
+        android:layout_marginStart="54dp"
         android:layout_marginTop="29dp"
+        android:text="@string/default_name"
         android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/back_btn"
+        app:layout_constraintStart_toEndOf="@+id/serving_weight"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/display_pot_weight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/default_weight"
         android:textAlignment="center"
-        app:layout_constraintEnd_toStartOf="@+id/display_pot_name"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/display_pot_name"
         app:layout_constraintTop_toBottomOf="@+id/display_pot_name" />
+
+    <EditText
+        android:id="@+id/enterend_W_with_food"
+        android:layout_width="133dp"
+        android:layout_height="41dp"
+        android:layout_marginBottom="96dp"
+        android:layout_marginTop="95dp"
+        android:ems="10"
+        android:hint="@string/enter_weight_g"
+        android:maxLength="9"
+        android:inputType="number"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/Calculated_Serving_Number"
+        app:layout_constraintStart_toStartOf="@+id/display_pot_weight"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/Calculated_Food_Weight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="@string/_0"
+        app:layout_constraintStart_toStartOf="@+id/enterend_W_with_food"
+        app:layout_constraintTop_toBottomOf="@+id/enterend_W_with_food" />
+
+    <TextView
+        android:id="@+id/Calculated_Serving_Number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="@string/_0"
+        app:layout_constraintStart_toStartOf="@+id/entered_Serving_number"
+        app:layout_constraintTop_toTopOf="@+id/serving_weight" />
+
+    <EditText
+        android:id="@+id/entered_Serving_number"
+        android:layout_width="0dp"
+        android:layout_height="38dp"
+        android:layout_marginBottom="18dp"
+        android:layout_marginTop="21dp"
+        android:ems="10"
+        android:maxLength="9"
+        android:hint="@string/enter_of_servings"
+        android:inputType="number"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/Calculated_Serving_Number"
+        app:layout_constraintEnd_toEndOf="@+id/enterend_W_with_food"
+        app:layout_constraintStart_toStartOf="@+id/enterend_W_with_food"
+        app:layout_constraintTop_toBottomOf="@+id/Calculated_Food_Weight" />
 </android.support.constraint.ConstraintLayout>
