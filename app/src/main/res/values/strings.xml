@@ -19,4 +19,9 @@
     <string name="_0">0</string>
     <string name="enter_weight_g">Enter Weight (g)</string>
     <string name="enter_of_servings">Enter # of Servings</string>
+    <string name="remove">Remove</string>
+    <string name="select_a_pot_to_remove">Select A Pot To Remove</string>
+    <string name="are_you_sure_you_want_to_remove_this_pot">Are You Sure You Want To Remove This Pot?</string>
+    <string name="no">NO</string>
+    <string name="yes">YES</string>
 </resources>

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -24,6 +25,7 @@ public class MainMenu extends AppCompatActivity {
 
     public static final int REQUEST_CODE = 114;
     public static final int REQUEST_EDIT = 8078;
+    public static final int REQUEST_REMOVE = 1919;
     PotCollection my_pot_collection = new PotCollection();
 
     @Override
@@ -34,6 +36,7 @@ public class MainMenu extends AppCompatActivity {
         setupAddPotButton();
         RegisterClickCallBackForPots();
         RegisterLongClickForEditing();
+        setupRemovePotButton();
 
 //        Intent intent = getIntent();
 //        int pot_weight = intent.getIntExtra("Pot Weight", 0);
@@ -125,7 +128,7 @@ public class MainMenu extends AppCompatActivity {
     }
 
     // initiate Pot Editing feature
-    private void  RegisterLongClickForEditing(){
+    private void RegisterLongClickForEditing(){
         ListView long_list = (ListView) findViewById(R.id.Pots);
         long_list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -133,7 +136,22 @@ public class MainMenu extends AppCompatActivity {
                 final Intent intent = new Intent(MainMenu.this, AddingNewPot.class);
                 intent.putExtra("Selected Position For Edit", position);
                 startActivityForResult(intent, REQUEST_EDIT);
-                return false;
+                return true;
+            }
+        });
+    }
+
+    // initiate Pot Removing feature
+    private void setupRemovePotButton(){
+        Button Remove_Pot = (Button) findViewById(R.id.remove_button);
+        Remove_Pot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainMenu.this, RemovePot.class);
+                String[] pot_description = my_pot_collection.getPotDescriptions();
+//              intent.putParcelableArrayListExtra("Pot Collection", my_pot_collection);
+                intent.putExtra("Pot Collection", pot_description);
+                startActivityForResult(intent, REQUEST_REMOVE);
             }
         });
     }

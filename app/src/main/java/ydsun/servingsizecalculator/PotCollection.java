@@ -1,12 +1,14 @@
 package ydsun.servingsizecalculator;
 
+import android.os.Parcelable;
 import java.util.ArrayList;
 import java.util.List;
+import java.io.Serializable;
 
 /**
  * Class to manage a collection of pots.
  */
-public class PotCollection {
+public class PotCollection extends ArrayList<Parcelable> implements Serializable{
     private List<Pot> pots = new ArrayList<>();
 
 

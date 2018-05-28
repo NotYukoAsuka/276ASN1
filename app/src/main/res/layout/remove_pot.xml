@@ -4,41 +4,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainMenu"
-    tools:layout_editor_absoluteY="81dp">
+    tools:context=".RemovePot">
 
     <ListView
-        android:id="@+id/Pots"
+        android:id="@+id/pots_to_remove"
         android:layout_width="354dp"
-        android:layout_height="308dp"
-        android:layout_marginBottom="44dp"
-        android:layout_marginTop="2dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="50dp"
+        android:layout_marginTop="40dp"
         android:headerDividersEnabled="false"
-        app:layout_constraintBottom_toTopOf="@+id/add_pot"
+        app:layout_constraintBottom_toTopOf="@+id/remove_back"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/add_pot"
+        android:id="@+id/remove_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
-        android:layout_marginEnd="48dp"
-        android:text="@string/add_pot"
+        android:layout_marginBottom="65dp"
+        android:layout_marginEnd="49dp"
+        android:text="@string/back"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Pots" />
+        app:layout_constraintTop_toBottomOf="@+id/pots_to_remove" />
 
-    <Button
-        android:id="@+id/remove_button"
+    <TextView
+        android:id="@+id/remove_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="224dp"
-        android:text="@string/remove"
-        app:layout_constraintBottom_toBottomOf="@+id/add_pot"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/add_pot"
-        app:layout_constraintVertical_bias="0.0" />
-
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/select_a_pot_to_remove"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/pots_to_remove"
+        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

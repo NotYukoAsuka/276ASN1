@@ -4,7 +4,11 @@ package ydsun.servingsizecalculator;
  * Store information about a single pot
  */
 
-public class Pot {
+import java.io.Serializable;
+import java.util.ArrayList;
+import android.os.Parcelable;
+
+public class Pot extends ArrayList<Parcelable> implements Serializable{
     private String name;
     private int weightInG;
 
