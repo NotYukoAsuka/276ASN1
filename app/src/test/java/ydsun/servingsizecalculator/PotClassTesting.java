@@ -46,4 +46,16 @@ public class PotClassTesting {
     public void testing_initiate_bad_Weight() throws Exception{
         Pot testing_pot_5 = new Pot("bad weight", -1);
     }
+
+    @Test
+    public void testing_serialize(){
+        Pot testing_pot_6 = new Pot(",,,,,", 5);
+        String test_string = testing_pot_6.serialize();
+        Assert.assertEquals(test_string, "¿¿¿¿¿, 5");
+        testing_pot_6.setName("XDDD");
+        testing_pot_6.setWeightInG(10);
+        testing_pot_6.parse(test_string);
+        Assert.assertEquals(testing_pot_6.getName(), ",,,,,");
+        Assert.assertEquals(testing_pot_6.getWeightInG(), 5);
+    }
 }

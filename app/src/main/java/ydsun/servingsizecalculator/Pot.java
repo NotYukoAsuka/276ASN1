@@ -56,4 +56,23 @@ public class Pot extends ArrayList<Parcelable> implements Serializable{
             this.name = name;
         }
     }
+
+    // Serialize Pots Into Strings
+    public String serialize(){
+
+        String change = this.getName().replace("¿", "？¿¿?");
+        return change.replace(",", "¿") + ", " + this.getWeightInG();
+    }
+
+    // Bring Serialized String Back To Pot
+    public void parse(String serialized){
+        int pos = serialized.indexOf(",");
+        String name = serialized.substring(0,pos);
+        int weight = Integer.parseInt(serialized.substring(pos+2));
+        name = name.replace("¿", ",");
+        name = name.replace("？¿¿?", "¿");
+        this.setName(name);
+        this.setWeightInG(weight);
+    }
+
 }

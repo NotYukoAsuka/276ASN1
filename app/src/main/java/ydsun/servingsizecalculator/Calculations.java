@@ -56,20 +56,30 @@ public class Calculations extends AppCompatActivity {
 
                 if(entered_weight_as_string.length() == 0){
                     Toast.makeText(getApplicationContext(), "Please Enter A Valid Weight!", Toast.LENGTH_SHORT).show();
+                    weight_of_food[0] = 0;
+                    displayfoodweight();
                 }
                 else if(Integer.parseInt(entered_weight_as_string) < pot_weight){
                     Toast.makeText(getApplicationContext(), "Weight of Pot and Food Cannot be less than Weight of Pot!", Toast.LENGTH_LONG).show();
+                    weight_of_food[0] = 0;
+                    displayfoodweight();
                 }
                 else if(Integer.parseInt(entered_weight_as_string) == pot_weight){
                     Toast.makeText(getApplicationContext(), "Doesn't Like Food huh?", Toast.LENGTH_LONG).show();
+                    weight_of_food[0] = 0;
+                    displayfoodweight();
                 }
                 else{
                     int entered_weight_as_int = Integer.parseInt(entered_weight_as_string);
                     weight_of_food[0] = entered_weight_as_int - pot_weight;
-                    String food_weight_as_string = "" + weight_of_food[0];
-                    TextView display_food_weight = (TextView) findViewById(R.id.Calculated_Food_Weight);
-                    display_food_weight.setText(food_weight_as_string);
+                    displayfoodweight();
                 }
+            }
+
+            private void displayfoodweight() {
+                String food_weight_as_string = "" + weight_of_food[0];
+                TextView display_food_weight = (TextView) findViewById(R.id.Calculated_Food_Weight);
+                display_food_weight.setText(food_weight_as_string);
             }
         });
 

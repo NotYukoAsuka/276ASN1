@@ -1,5 +1,7 @@
 package ydsun.servingsizecalculator;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Parcelable;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +12,7 @@ import java.io.Serializable;
  */
 public class PotCollection extends ArrayList<Parcelable> implements Serializable{
     private List<Pot> pots = new ArrayList<>();
-
+    private Context mCtx;
 
     public void addPot(Pot pot) {
         pots.add(pot);
@@ -49,6 +51,36 @@ public class PotCollection extends ArrayList<Parcelable> implements Serializable
         if (index < 0 || index >= countPots()) {
             throw new IllegalArgumentException();
         }
+    }
 
+    public PotCollection(Context ctx) {
+        mCtx = ctx;
+    }
+
+    public void save(){
+        SharedPreferences sp = mCtx.getSharedPreferences(BuildConfig.APPLICATION_ID + ".PREFERENCE_FILE_KEY", Context.MODE_PRIVATE);
+        for(int i = 0; i < this.countPots(); i++){
+            Pot pot = this.pots.get(i);
+            sp.edit().putString("pot" + i, pot.serialize()).apply();
+        }
+    }
+
+    public void load(){
+        SharedPreferences sp = mCtx.getSharedPreferences(BuildConfig.APPLICATION_ID + ".PREFERENCE_FILE_KEY", Context.MODE_PRIVATE);
+        int i = 0;
+        while(true) {
+            String potString = sp.getString("pot" + i, null);
+            if (potString == null) break;
+            Pot pot = new Pot("defualt",0);
+            pot.parse(potString);
+            this.addPot(pot);
+            sp.edit().putString("Pot" + i, null).apply(); // clear storage
+            i++;
+        }
+    }
+
+    public void clear_data(){
+        SharedPreferences sp = mCtx.getSharedPreferences(BuildConfig.APPLICATION_ID + ".PREFERENCE_FILE_KEY", Context.MODE_PRIVATE);
+        sp.edit().clear().apply();
     }
 }

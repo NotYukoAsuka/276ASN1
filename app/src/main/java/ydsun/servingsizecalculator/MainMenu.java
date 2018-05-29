@@ -23,16 +23,21 @@ import java.util.List;
 // List view: {views: pots.xml}
 
 public class MainMenu extends AppCompatActivity {
+    public static final String POT_LIST = "POT LIST";
     public static final String SELECTED_POS = "Selected Position For Edit";
     public static final int REQUEST_CODE = 114;
-    public static final int REQUEST_EDIT = 8078;
+    public static final int REQUEST_EDIT = 514;
     public static final int REQUEST_REMOVE = 1919;
-    PotCollection my_pot_collection = new PotCollection();
+    private PotCollection my_pot_collection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_menu);
+
+        my_pot_collection = new PotCollection(getApplicationContext());
+        my_pot_collection.load();
+        display_list_view();
 
         setupAddPotButton();
         RegisterClickCallBackForPots();
@@ -63,6 +68,7 @@ public class MainMenu extends AppCompatActivity {
                     int pot_weight = data.getIntExtra("Pot Weight", 0);
                     Pot new_pot = new Pot(pot_name, pot_weight);
                     my_pot_collection.addPot(new_pot);
+                    my_pot_collection.save();
                     display_list_view();
                 }
                 else{
@@ -77,9 +83,11 @@ public class MainMenu extends AppCompatActivity {
                     int position = data.getIntExtra("Position", 0);
                     Pot edited_pot = new Pot(pot_name_new, pot_weight_new);
                     my_pot_collection.changePot(edited_pot,position);
+                    my_pot_collection.save();
                     display_list_view();
                 }
                 else{
+                    my_pot_collection.save();
                     display_list_view();
                 }
         }
@@ -90,6 +98,8 @@ public class MainMenu extends AppCompatActivity {
                     int position = data.getIntExtra("removing_pos",0);
                     Toast.makeText(getApplicationContext(), "Removed Pot: " + my_pot_collection.getPot(position).getName(), Toast.LENGTH_LONG).show();
                     my_pot_collection.removePot(position);
+                    my_pot_collection.clear_data();
+                    my_pot_collection.save();
                     display_list_view();
                 }
         }

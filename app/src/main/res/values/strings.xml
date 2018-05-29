@@ -25,4 +25,5 @@
     <string name="no">NO</string>
     <string name="yes">YES</string>
     <string name="weight_100000000g"><![CDATA[Weight < 100000000g]]></string>
+    <string name="supporting_optional_features_1_4">Supporting Optional Features 1-4!</string>
 </resources>
