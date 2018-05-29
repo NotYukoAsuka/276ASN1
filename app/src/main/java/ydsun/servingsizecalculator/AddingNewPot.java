@@ -1,6 +1,7 @@
 package ydsun.servingsizecalculator;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,14 +11,23 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class AddingNewPot extends AppCompatActivity {
+    private static final String SELECTED_POS = "Selected Position For Edit";
+    private int Pos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_new_pot);
 
+        extractDataFromIntentForEditing();
         setupOKButton();
         setupCancelButton();
+    }
+
+    // Data For Edit Feature
+    private void extractDataFromIntentForEditing(){
+        Intent intent = getIntent();
+        Pos = intent.getIntExtra(SELECTED_POS,0);
     }
 
     // initiate OK Button
@@ -26,10 +36,8 @@ public class AddingNewPot extends AppCompatActivity {
         OK_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent data = getIntent();
-                final int position = data.getIntExtra("Selected Position For Edit", 0);
                 final Intent intent = new Intent();
-                intent.putExtra("Position", position);
+                intent.putExtra("Position", Pos);
                 EditText user_typed_name = (EditText) findViewById(R.id.UserEnterName);
                 String typed_name = user_typed_name.getText().toString();
 
@@ -47,10 +55,10 @@ public class AddingNewPot extends AppCompatActivity {
                 else if (Double.parseDouble(typed_weight) > 99999999 && Double.parseDouble(typed_weight) < 1000000000000l){
                     Toast.makeText(getApplicationContext(), "Come on! That is too Heavy for a Pot to be!", Toast.LENGTH_LONG).show();
                 }
-                else if (Double.parseDouble(typed_weight) > 1000000000000l && Double.parseDouble(typed_weight) < 99999999999999999l){
+                else if (Double.parseDouble(typed_weight) >= 1000000000000l && Double.parseDouble(typed_weight) < 99999999999999999l){
                     Toast.makeText(getApplicationContext(), "Your Trying to Test Out the Limit Aren't You...?", Toast.LENGTH_LONG).show();
                 }
-                else if (Double.parseDouble(typed_weight) > 99999999999999999l){
+                else if (Double.parseDouble(typed_weight) >= 99999999999999999l){
                     Toast.makeText(getApplicationContext(), "I Guess You Found the Limit....", Toast.LENGTH_LONG).show();
                 }
                 else {
@@ -91,4 +99,17 @@ public class AddingNewPot extends AppCompatActivity {
             }
         });
     }
+
+    // Intent for Adding Pot
+    public static Intent makeIntentForAdding(MainMenu context) {
+        return new Intent(context, AddingNewPot.class);
+    }
+
+    // Position Data for Edit Feature
+    public static Intent makeIntentForEditing(MainMenu context, int Pos) {
+        Intent intent = new Intent(context, AddingNewPot.class);
+        intent.putExtra(SELECTED_POS, Pos);
+        return intent;
+    }
+
 }

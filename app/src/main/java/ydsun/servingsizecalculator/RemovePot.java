@@ -13,16 +13,19 @@ import android.widget.ListView;
 public class RemovePot extends AppCompatActivity {
 
     public static final int REQUEST_CONFORM = 810;
+    public static final String POT_LIST = "Pot List";
+    private String[] pot_list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.remove_pot);
 
-        Intent intent = getIntent();
-
-        String[] pot_description = intent.getStringArrayExtra("Pot Collection");
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.pots, pot_description);
+        extractDataFromIntentForRemoving();
+//        Intent intent = getIntent();
+//
+//        String[] pot_description = intent.getStringArrayExtra("Pot Collection");
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.pots, pot_list);
         ListView list = (ListView) findViewById(R.id.pots_to_remove);
         list.setAdapter(adapter);
 
@@ -45,6 +48,12 @@ public class RemovePot extends AppCompatActivity {
         }
     }
 
+    // Data For Edit Feature
+    private void extractDataFromIntentForRemoving(){
+        Intent intent = getIntent();
+        pot_list = intent.getStringArrayExtra(POT_LIST);
+    }
+
     // initiate BACK button
     private void setupBACKButton(){
         Button back = (Button) findViewById(R.id.remove_back);
@@ -62,10 +71,16 @@ public class RemovePot extends AppCompatActivity {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
-                final Intent data = new Intent(RemovePot.this, Conformation.class);
-                data.putExtra("removing position", position);
+                Intent data = Conformation.makeIntentForConforming(RemovePot.this, position);
                 startActivityForResult(data, REQUEST_CONFORM);
             }
         });
+    }
+
+    // List Data for Remove Feature
+    public static Intent makeIntentForRemoving(MainMenu context, String[] pot_description) {
+        Intent intent = new Intent(context, RemovePot.class);
+        intent.putExtra(POT_LIST, pot_description);
+        return intent;
     }
 }

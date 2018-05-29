@@ -13,26 +13,26 @@ import android.widget.Toast;
 
 public class Calculations extends AppCompatActivity {
 
+    public static final String CLICKED_POT_NAME = "Clicked Pot";
+    public static final String CLICKED_POT_WEIGHT = "Clicked Weight";
+    // Load the clicked pot's info
+    private String pot_name;
+    private int pot_weight;
+    final int[] weight_of_food = {0};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.calculations_of_servings);
 
-        final int[] weight_of_food = {0};
-
-        Intent intent = getIntent();
-
-        // Load the clicked pot's info
-        String pot_name = intent.getStringExtra("Selected Name");
-        final int pot_weight = intent.getIntExtra("Selected Weight", 0);
-        String pot_weight_as_string = "" + pot_weight;
-
+        extractDataFromIntentForCalc();
         setupBACKButton();
 
         // Showing info on activity
         TextView display_name = (TextView) findViewById(R.id.display_pot_name);
         display_name.setText(pot_name);
 
+        String pot_weight_as_string = "" + pot_weight;
         TextView display_raw_weight = (TextView) findViewById(R.id.display_pot_weight);
         display_raw_weight.setText(pot_weight_as_string);
 
@@ -109,6 +109,13 @@ public class Calculations extends AppCompatActivity {
         });
     }
 
+    // Data For Calculations
+    private void extractDataFromIntentForCalc(){
+        Intent intent = getIntent();
+        pot_name = intent.getStringExtra(CLICKED_POT_NAME);
+        pot_weight = intent.getIntExtra(CLICKED_POT_WEIGHT,0);
+    }
+
     // initiate BACK button
     private void setupBACKButton(){
         Button back = (Button) findViewById(R.id.back_btn);
@@ -118,5 +125,13 @@ public class Calculations extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    // Pot Data for Calculations
+    public static Intent makeIntentForCalc(MainMenu context, Pot pot) {
+        Intent intent = new Intent(context, Calculations.class);
+        intent.putExtra(CLICKED_POT_NAME, pot.getName());
+        intent.putExtra(CLICKED_POT_WEIGHT, pot.getWeightInG());
+        return intent;
     }
 }

@@ -10,13 +10,23 @@ import android.widget.Toast;
 
 public class Conformation extends AppCompatActivity {
 
+    public static final String POT_POS = "Position of the Pot";
+    private int position;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.conformation);
 
+        extractDataFromIntentForRemoveConformation();
         setupNoButton();
         setupYesButton();
+    }
+
+    // Data For Edit Feature
+    private void extractDataFromIntentForRemoveConformation(){
+        Intent intent = getIntent();
+        position = intent.getIntExtra(POT_POS,0);
     }
 
     // initiate No Button
@@ -37,13 +47,18 @@ public class Conformation extends AppCompatActivity {
         Yes_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent pos = getIntent();
                 final Intent intent = new Intent();
-                int position = pos.getIntExtra("removing position", 0);
                 intent.putExtra("conforming position", position);
                 setResult(Activity.RESULT_OK, intent);
                 finish();
             }
         });
+    }
+
+    // Position Data for removing conformation
+    public static Intent makeIntentForConforming(RemovePot context, int position) {
+        Intent intent = new Intent(context, Conformation.class);
+        intent.putExtra(POT_POS, position);
+        return intent;
     }
 }

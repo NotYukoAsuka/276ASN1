@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 // Test Class for Pot Class
-public class TEST {
+public class PotClassTesting {
     @Test
     public void testing_get() throws Exception {
         Pot testing_pot = new Pot("test name", 0);

@@ -23,7 +23,7 @@ import java.util.List;
 // List view: {views: pots.xml}
 
 public class MainMenu extends AppCompatActivity {
-
+    public static final String SELECTED_POS = "Selected Position For Edit";
     public static final int REQUEST_CODE = 114;
     public static final int REQUEST_EDIT = 8078;
     public static final int REQUEST_REMOVE = 1919;
@@ -38,7 +38,6 @@ public class MainMenu extends AppCompatActivity {
         RegisterClickCallBackForPots();
         RegisterLongClickForEditing();
         setupRemovePotButton();
-
 //        Intent intent = getIntent();
 //        int pot_weight = intent.getIntExtra("Pot Weight", 0);
 //        String pot_name = intent.getStringExtra("Pot Name");
@@ -64,16 +63,10 @@ public class MainMenu extends AppCompatActivity {
                     int pot_weight = data.getIntExtra("Pot Weight", 0);
                     Pot new_pot = new Pot(pot_name, pot_weight);
                     my_pot_collection.addPot(new_pot);
-                    String[] pot_description = my_pot_collection.getPotDescriptions();
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.pots, pot_description);
-                    ListView list = (ListView) findViewById(R.id.Pots);
-                    list.setAdapter(adapter);
+                    display_list_view();
                 }
                 else{
-                    String[] pot_description = my_pot_collection.getPotDescriptions();
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.pots, pot_description);
-                    ListView list = (ListView) findViewById(R.id.Pots);
-                    list.setAdapter(adapter);
+                    display_list_view();
                 }
         }
         switch(requestCode){
@@ -84,16 +77,10 @@ public class MainMenu extends AppCompatActivity {
                     int position = data.getIntExtra("Position", 0);
                     Pot edited_pot = new Pot(pot_name_new, pot_weight_new);
                     my_pot_collection.changePot(edited_pot,position);
-                    String[] pot_description = my_pot_collection.getPotDescriptions();
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.pots, pot_description);
-                    ListView list = (ListView) findViewById(R.id.Pots);
-                    list.setAdapter(adapter);
+                    display_list_view();
                 }
                 else{
-                    String[] pot_description = my_pot_collection.getPotDescriptions();
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.pots, pot_description);
-                    ListView list = (ListView) findViewById(R.id.Pots);
-                    list.setAdapter(adapter);
+                    display_list_view();
                 }
         }
 
@@ -103,12 +90,17 @@ public class MainMenu extends AppCompatActivity {
                     int position = data.getIntExtra("removing_pos",0);
                     Toast.makeText(getApplicationContext(), "Removed Pot: " + my_pot_collection.getPot(position).getName(), Toast.LENGTH_LONG).show();
                     my_pot_collection.removePot(position);
-                    String[] pot_description = my_pot_collection.getPotDescriptions();
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.pots, pot_description);
-                    ListView list = (ListView) findViewById(R.id.Pots);
-                    list.setAdapter(adapter);
+                    display_list_view();
                 }
         }
+    }
+
+    // method to setup list view for pots
+    private void display_list_view() {
+        String[] pot_description = my_pot_collection.getPotDescriptions();
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.pots, pot_description);
+        ListView list = (ListView) findViewById(R.id.Pots);
+        list.setAdapter(adapter);
     }
 
     // initiate Add Pot Button
@@ -117,7 +109,7 @@ public class MainMenu extends AppCompatActivity {
         Add_Pot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainMenu.this, AddingNewPot.class);
+                Intent intent = AddingNewPot.makeIntentForAdding(MainMenu.this);
                 //startActivity(intent);
                 startActivityForResult(intent, REQUEST_CODE);
             }
@@ -130,12 +122,12 @@ public class MainMenu extends AppCompatActivity {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
-                final Intent intent = new Intent(MainMenu.this, Calculations.class);
-                Pot selected_pot = my_pot_collection.getPot(position);
-                String selected_pot_name = selected_pot.getName();
-                int selected_pot_weight = selected_pot.getWeightInG();
-                intent.putExtra("Selected Name", selected_pot_name);
-                intent.putExtra("Selected Weight", selected_pot_weight);
+                Intent intent = Calculations.makeIntentForCalc(MainMenu.this, my_pot_collection.getPot(position));
+//                Pot selected_pot = my_pot_collection.getPot(position);
+//                String selected_pot_name = selected_pot.getName();
+//                int selected_pot_weight = selected_pot.getWeightInG();
+//                intent.putExtra("Selected Name", selected_pot_name);
+//                intent.putExtra("Selected Weight", selected_pot_weight);
                 startActivity(intent);
             }
         });
@@ -147,8 +139,8 @@ public class MainMenu extends AppCompatActivity {
         long_list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View viewClicked, int position, long id) {
-                final Intent intent = new Intent(MainMenu.this, AddingNewPot.class);
-                intent.putExtra("Selected Position For Edit", position);
+                Intent intent = AddingNewPot.makeIntentForEditing(MainMenu.this, position);
+//              intent.putExtra("Selected Position For Edit", position);
                 startActivityForResult(intent, REQUEST_EDIT);
                 return true;
             }
@@ -161,10 +153,10 @@ public class MainMenu extends AppCompatActivity {
         Remove_Pot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainMenu.this, RemovePot.class);
                 String[] pot_description = my_pot_collection.getPotDescriptions();
+                Intent intent = RemovePot.makeIntentForRemoving(MainMenu.this, pot_description);
 //              intent.putParcelableArrayListExtra("Pot Collection", my_pot_collection);
-                intent.putExtra("Pot Collection", pot_description);
+//                intent.putExtra("Pot Collection", pot_description);
                 startActivityForResult(intent, REQUEST_REMOVE);
             }
         });
