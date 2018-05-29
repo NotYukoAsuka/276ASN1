@@ -1,5 +1,6 @@
 package ydsun.servingsizecalculator;
 
+import android.arch.core.BuildConfig;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Parcelable;
